@@ -1,0 +1,19 @@
+{
+  "name": "taskscheduler",
+  "version": "1.0.0",
+  "description": "Task Scheduler Web app.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VineetPrasadVerma/TaskScheduler.git"
+  },
+  "author": "Vineet Prasad Verma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VineetPrasadVerma/TaskScheduler/issues"
+  },
+  "homepage": "https://github.com/VineetPrasadVerma/TaskScheduler#readme"
+}
