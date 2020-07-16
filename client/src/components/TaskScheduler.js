@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { TaskContext } from '../contexts/TaskContext'
 import Paper from '@material-ui/core/Paper'
-import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler'
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing
+} from '@devexpress/dx-react-scheduler'
 import {
   Scheduler,
   WeekView,
@@ -15,83 +20,76 @@ import {
   DayView,
   AllDayPanel
 } from '@devexpress/dx-react-scheduler-material-ui'
+import schedulerServices from '../shared/schedulerServices'
 
-const TaskScheduler = () => {
-  const schedulerData = [
-    {
-      id: 0,
-      startDate: new Date(2020, 6, 15, 9, 45),
-      endDate: new Date(2020, 6, 15, 11, 45),
-      title: 'Meeting'
-    },
-    {
-      id: 1,
-      startDate: new Date(2020, 6, 15, 12, 0),
-      endDate: new Date(2020, 6, 15, 13, 30),
-      title: 'Go to a gym'
-    },
-    {
-      id: 2,
-      startDate: new Date(2020, 6, 15, 14, 45),
-      endDate: new Date(2020, 6, 15, 16, 45),
-      title: 'Feleena'
-    }
-  ]
+const TaskScheduler = ({ handleError }) => {
+  const { tasks, dispatch } = useContext(TaskContext)
 
   const [currentViewName, setCurrentViewName] = useState('Week')
-  const [data, setData] = useState(schedulerData)
+  const [scheduledTasks, setScheduledTasks] = useState([])
 
-  // console.log(data)
-  const commitChanges = ({ added, changed, deleted }) => {
-    let appointments = data
-    console.log(appointments)
+  useEffect(() => {
+    for (const task of tasks) {
+      task.id = task._id
+      task.startDate = new Date(task.startDate)
+      task.endDate = new Date(task.endDate)
+    }
+    setScheduledTasks(tasks)
+  }, [tasks])
+
+  const commitChanges = async ({ added, changed, deleted }) => {
     if (added) {
-      console.log('Vineet', added)
-
-      const startingAddedId = appointments.length > 0 ? appointments[appointments.length - 1].id + 1 : 0
-      appointments = [...appointments, { id: startingAddedId, ...added }]
+      try {
+        const res = await schedulerServices.createTask(added)
+        const newTask = { _id: res.data._id, ...added }
+        dispatch({
+          type: 'ADD_TASK',
+          task: { ...newTask }
+        })
+      } catch (err) {
+        handleError("Can't add task")
+      }
     }
+
     if (changed) {
-      console.log('Vikas', changed)
-      appointments = appointments.map(appointment => (
-        changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment))
+      const updatedData = Object.values(changed)[0]
+      const id = Object.keys(changed)[0]
+      try {
+        await schedulerServices.updateTask(id, updatedData)
+        dispatch({ type: 'UPDATE_TASK', task: { _id: id, ...updatedData } })
+      } catch (err) {
+        handleError("Can't update task")
+      }
     }
+
     if (deleted !== undefined) {
-      console.log('vinay', deleted)
-
-      appointments = appointments.filter(appointment => appointment.id !== deleted)
+      try {
+        await schedulerServices.deleteTask(deleted)
+        dispatch({ type: 'DELETE_TASK', task: { _id: deleted } })
+      } catch (err) {
+        handleError("Can't delete task")
+      }
     }
-
-    setData(appointments)
   }
 
   return (
     <Paper>
-      <Scheduler data={data} height={660}>
+      <Scheduler data={scheduledTasks} height={660}>
         <ViewState
-          // defaultCurrentDate='2018-11-01'
           currentViewName={currentViewName}
           onCurrentViewNameChange={setCurrentViewName}
         />
-
-        <EditingState
-          onCommitChanges={commitChanges}
-        />
+        <EditingState onCommitChanges={commitChanges} />
         <IntegratedEditing />
-
         <DayView startDayHour={10} endDayHour={19} />
         <WeekView startDayHour={10} endDayHour={19} />
         <MonthView startDayHour={10} endDayHour={19} />
-
         <Toolbar />
         <DateNavigator />
         <TodayButton />
         <ViewSwitcher />
         <Appointments />
-        <AppointmentTooltip
-          showCloseButton
-          showOpenButton
-        />
+        <AppointmentTooltip showCloseButton showOpenButton />
         <AppointmentForm />
         <AllDayPanel />
       </Scheduler>

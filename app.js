@@ -12,7 +12,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/', taskRoutes)
+app.use('/tasks', taskRoutes)
 
 app.get('*', (req, res) => {
   res.status(404).json('404 Not found')
