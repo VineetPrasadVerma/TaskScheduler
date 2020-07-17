@@ -4,6 +4,7 @@ const taskQueries = {}
 
 taskQueries.getAllTasks = async (req, res) => {
   try {
+    console.log(req.user)
     const tasks = await Task.find()
     return res.status(200).json(tasks)
   } catch (err) {

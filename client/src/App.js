@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import TaskScheduler from './components/TaskScheduler'
 import TaskContextProvider from './contexts/TaskContext'
 import Error from './shared/Error'
+import PageNotFound from './shared/PageNotFound'
+import Register from './components/Register'
+import Login from './components/Login'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App () {
   const [error, setError] = useState(false)
@@ -13,11 +17,24 @@ function App () {
   }
 
   return !error ? (
-    <div className='App'>
-      <TaskContextProvider handleError={showError}>
-        <TaskScheduler handleError={showError} />
-      </TaskContextProvider>
-    </div>
+    <Router>
+      <div className='App'>
+        <Switch>
+          <Route path='/' exact>
+            <Register handleError={showError} />
+          </Route>
+          <Route path='/login'>
+            <Login handleError={showError} />
+          </Route>
+          <Route path='/tasks'>
+            <TaskContextProvider handleError={showError}>
+              <TaskScheduler handleError={showError} />
+            </TaskContextProvider>
+          </Route>
+          <Route path='*' component={PageNotFound} />
+        </Switch>
+      </div>
+    </Router>
   ) : (
     <Error message={message} />
   )

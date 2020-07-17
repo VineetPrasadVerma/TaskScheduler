@@ -21,10 +21,13 @@ import {
   AllDayPanel
 } from '@devexpress/dx-react-scheduler-material-ui'
 import schedulerServices from '../shared/schedulerServices'
+import { Button } from '@material-ui/core'
+import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 const TaskScheduler = ({ handleError }) => {
   const { tasks, dispatch } = useContext(TaskContext)
-
+  const [logout, setLogout] = useState(false)
   const [currentViewName, setCurrentViewName] = useState('Week')
   const [scheduledTasks, setScheduledTasks] = useState([])
 
@@ -72,8 +75,26 @@ const TaskScheduler = ({ handleError }) => {
     }
   }
 
-  return (
+  const handleLogout = async () => {
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: 'logout/'
+      })
+
+      if (res.status === 200) {
+        setLogout(true)
+      } else {
+        handleError("Can't Logout")
+      }
+    } catch (err) {
+      handleError("Can't Logout")
+    }
+  }
+
+  return !logout ? (
     <Paper>
+      <Button onClick={handleLogout}>Logout</Button>
       <Scheduler data={scheduledTasks} height={660}>
         <ViewState
           currentViewName={currentViewName}
@@ -81,9 +102,9 @@ const TaskScheduler = ({ handleError }) => {
         />
         <EditingState onCommitChanges={commitChanges} />
         <IntegratedEditing />
-        <DayView startDayHour={10} endDayHour={19} />
-        <WeekView startDayHour={10} endDayHour={19} />
-        <MonthView startDayHour={10} endDayHour={19} />
+        <DayView startDayHour={8} endDayHour={17} />
+        <WeekView startDayHour={8} endDayHour={17} />
+        <MonthView startDayHour={8} endDayHour={17} />
         <Toolbar />
         <DateNavigator />
         <TodayButton />
@@ -94,6 +115,8 @@ const TaskScheduler = ({ handleError }) => {
         <AllDayPanel />
       </Scheduler>
     </Paper>
+  ) : (
+    <Redirect to='/login' />
   )
 }
 
