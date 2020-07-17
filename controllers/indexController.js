@@ -9,11 +9,11 @@ userQueries.createUser = async (req, res) => {
     const newUser = new User({ username })
     await User.register(newUser, password)
     passport.authenticate('local')(req, res, () => {
-      res.status(200).json({ message: true })
+      res.status(200).json()
     })
   } catch (err) {
     console.log(err)
-    res.status(500).json({ message: false })
+    res.status(500).json()
   }
 }
 

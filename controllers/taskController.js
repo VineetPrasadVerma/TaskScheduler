@@ -1,51 +1,71 @@
-const Task = require('../models/taskModels')
+const User = require('../models/userModels')
 
 const taskQueries = {}
 
 taskQueries.getAllTasks = async (req, res) => {
   try {
-    console.log(req.user)
-    const tasks = await Task.find()
-    return res.status(200).json(tasks)
-  } catch (err) {
-    res.status(500).json({ taskCount: 0, message: "Can't get tasks" })
+    const userId = req.user._id
+
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist" })
+    }
+
+    const tasks = user.tasks
+    res.status(200).json({ tasks })
+  } catch (e) {
+    res.status(500).json({ message: "Can't get tasks" })
   }
 }
 
 taskQueries.createTask = async (req, res) => {
   try {
     const { title, endDate, startDate, allDay, notes = '' } = req.body
-    const task = await Task.create({
-      title,
-      endDate,
-      startDate,
-      allDay,
-      notes
-    })
-    res
-      .status(201)
-      .json({ _id: task._id, title, endDate, startDate, allDay, notes })
-  } catch (err) {
+
+    const userId = req.user._id
+
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist" })
+    }
+
+    user.tasks.push({ title, endDate, startDate, allDay, notes })
+    await user.save()
+
+    const id = user.tasks[user.tasks.length - 1]._id
+    res.status(201).json({ _id: id, title, endDate, startDate, allDay, notes })
+  } catch (e) {
     res.status(500).json({ message: "Can't add Task" })
   }
 }
 
 taskQueries.updateTask = async (req, res) => {
   try {
-    const id = req.params.id
+    const userId = req.user._id
+    const taskId = req.params.id
+
     const updatedTask = req.body
-    const task = await Task.findOneAndUpdate(
-      { _id: id },
-      { $set: updatedTask },
-      { new: true }
-    )
-    if (!task) {
-      return res.status(404).json({ message: `Can't find task with id ${id}` })
+
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist" })
     }
 
-    res.status(200).json({ message: `Task modified with ID: ${id}` })
-  } catch (err) {
-    console.log(err)
+    const index = user.tasks.findIndex((task) => task._id == taskId)
+
+    if (index !== -1) {
+      Object.assign(user.tasks[index], updatedTask)
+      await user.save()
+      return res
+        .status(200)
+        .json({ message: `Task modified with ID: ${taskId}` })
+    }
+
+    return res
+      .status(404)
+      .json({ message: `Can't find task with id ${taskId}` })
+  } catch (e) {
+    console.log(e)
     res
       .status(500)
       .json({ message: `Can't update task of ${req.params.id} id` })
@@ -54,17 +74,31 @@ taskQueries.updateTask = async (req, res) => {
 
 taskQueries.deleteTask = async (req, res) => {
   try {
-    const id = req.params.id
-    const deletedTask = await Task.findOneAndDelete({ _id: id })
-    if (!deletedTask) {
-      return res.status(404).json({ message: `Can't find task with id ${id}` })
+    const userId = req.user._id
+    const taskId = req.params.id
+
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist" })
     }
 
-    res.status(200).json({ message: `Task deleted with ID: ${id}` })
+    const index = user.tasks.findIndex((task) => task._id == taskId)
+
+    if (index !== -1) {
+      user.tasks.splice(index, 1)
+      await user.save()
+      return res
+        .status(200)
+        .send({ message: `Task deleted with ID: ${taskId}` })
+    }
+
+    return res
+      .status(404)
+      .json({ message: `Can't find task with id ${taskId}` })
   } catch (e) {
     res
       .status(500)
-      .json({ message: `Can't delete task of ${req.params.id} id` })
+      .json({ message: `Can't delete subtask of id ${req.params.id}` })
   }
 }
 

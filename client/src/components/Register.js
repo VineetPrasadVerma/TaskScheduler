@@ -17,8 +17,10 @@ const Register = ({ handleError }) => {
         headers: { 'Content-type': 'application/json' }
       })
 
-      if (res.data.message) {
+      if (res.status === 200) {
         setShowCalender(true)
+      } else {
+        handleError("Can't Register User")
       }
     } catch (err) {
       handleError("Can't Register User")
