@@ -1,8 +1,8 @@
                                          TASK SCHEDULER WEB APP
 												
-##### See the app in action [here](https://captainvineet-taskscheduler.herokuapp.com/ )
+#### See the app in action [here](https://captainvineet-taskscheduler.herokuapp.com/ )
                                                   
-#### PROBLEM STATEMENT-
+### PROBLEM STATEMENT-
 Prototype a Task Scheduler Web App.
  * Create a registration page with general information.
  * Create a login page
@@ -12,7 +12,7 @@ Prototype a Task Scheduler Web App.
       calendar and the data should be synced with the Database
     * Create another page which shows an interactive Gantt Chart. This chart will mainly show the tasks across the timeline, click tasks to view more information.
 
-#### SOLUTION-
+### SOLUTION-
  * Developed a responsive MERN App.
  * New users can register and existing users can log in into the app.
  * After logging in a task page will open.
@@ -37,13 +37,13 @@ Prototype a Task Scheduler Web App.
 
 
 
-#### TECHNICAL CHOICES AND ARCHITECTURAL PATTERN-
+### TECHNICAL CHOICES AND ARCHITECTURAL PATTERN-
   * Used devexpress reactive library for task scheduler component.
   * Followed Model View Controller(MVC) pattern to organize and modularize code.
   * Used Google Charts library for Gantt Chart.
   * Database - MonogoDB.
 
-##### WHY I USED THIS?
+#### WHY I USED THIS?
  ##### [DEVEXPRESS REACTIVE LIBRARY](http://https://devexpress.github.io/devextreme-reactive/ "DEVEXPRESS REACTIVE LIBRARY")
   * It is very similar to google calendar.
   
@@ -61,14 +61,14 @@ Prototype a Task Scheduler Web App.
   * Have been using MongoDB for my recent couple of apps, so went ahead with this.
 
 
-#### TODOS-
+### TODOS-
   * Since the deadline is already there, left out the bonus task.
   * Can add the navigation bar.
   * Can show currently logged in user.
   * Can add the flash message functionality.
   * Can use JWT for authentication.
 
-#### ALTERNATIVE APPROACH- 
+### ALTERNATIVE APPROACH- 
  ##### AUTHENTICATION AND AUTHORIZATION
    * I have used `passport.js` library in past for authorization and authentication so I used the same for this app. 
    * Could have used JWT as it is the famous and secure approach for authentication. I have just basic about JWT but never got a chance to implement JWT, so just avoided it. However, planning to read and implement JWT in the next couple of days.
@@ -77,7 +77,7 @@ Prototype a Task Scheduler Web App.
   * Could have used 2 different collections: one for users and other for tasks, to store tasks and users separately and use SQL like concept similar to a foreign key to fetch data for a particular user.
   * As the biggest advantage of NoSQL databases is that we can organize the data in document format, it becomes super easy and time-saving to use a single collection for storing the data.
 
-#### APPS THAT I AM PROUD OF-
+### APPS THAT I AM PROUD OF-
   ##### Yelpcamp App(https://captainvineet-yelpcamp.herokuapp.com/)
   Source code:https://github.com/VineetPrasadVerma/WebDevelopmentBootCamp-Node.js/tree/master/YelpCamp/v11
    * YelpCamp allows users to add campgrounds for other users, to comment, and to view campground created by other users.
@@ -91,7 +91,7 @@ Prototype a Task Scheduler Web App.
    * Clone of functionalities of the Ubuntu todo app. Apart from basic CRUD operations some of the other functionalities are scheduling, prioritizing, add notes in the tasks, etc.
 
  
-#### SETUP INSTRUCTION-
+### SETUP INSTRUCTION-
 Prerequisite: Node.js, MongoDB
   * Clone the repo
   * `cd` to root of repo
@@ -106,7 +106,7 @@ Prerequisite: Node.js, MongoDB
   * Run `npm start` to start the app
   * Open http://localhost:3000 to view it in the browser
 
-#### TESTING-
+### TESTING-
 Test cases:
 * User with the existing name should not be able to sign up.
 * Users should not be allowed to access tasks if the password is wrong.
@@ -120,7 +120,7 @@ Test cases:
 
 I have not written automated tests as I am not aware of them and was running out of time to read about it. I have done the functional testing for the test-cases mentioned above manually.
 
-#### SCREESHOTS-
+### SCREESHOTS-
 <div align="center">
     <img src="/screenshots/ss3.png"</img> 
     <img src="/screenshots/ss1.png"</img> 
@@ -129,5 +129,5 @@ I have not written automated tests as I am not aware of them and was running out
     <img src="/screenshots/ss2.png"</img> 
 </div> 
  
- #### PORTFOLIO LINK-
+### PORTFOLIO LINK-
    https://captainvineet-portfolio.netlify.app/
