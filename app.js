@@ -3,6 +3,7 @@ require('dotenv').config()
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const express = require('express')
+const path = require('path')
 const cors = require('cors')
 const connectDB = require('./config/connection')
 const taskRoutes = require('./routes/taskRoutes')
@@ -32,6 +33,13 @@ passport.deserializeUser(User.deserializeUser())
 // ROUTES HANDLE
 app.use('/', indexRoutes)
 app.use('/tasks', taskRoutes)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, './client/build')))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/build/index.html'))
+  })
+}
 
 app.listen(process.env.PORT, () =>
   console.log(`TaskScheduler Server has started on PORT ${process.env.PORT}`)
