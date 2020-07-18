@@ -37,6 +37,7 @@ const Login = ({ handleError }) => {
 
       <form onSubmit={handleLogin}>
         <input
+          required
           type='text'
           value={username}
           autoFocus
@@ -44,6 +45,7 @@ const Login = ({ handleError }) => {
           onChange={(event) => setUserName(event.target.value)}
         />
         <input
+          required
           type='password'
           value={password}
           placeholder=' password'

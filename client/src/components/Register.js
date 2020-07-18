@@ -35,6 +35,7 @@ const Register = ({ handleError }) => {
 
       <form onSubmit={handleRegistration}>
         <input
+          required
           type='text'
           value={username}
           autoFocus
@@ -42,6 +43,7 @@ const Register = ({ handleError }) => {
           onChange={(event) => setUserName(event.target.value)}
         />
         <input
+          required
           type='password'
           value={password}
           placeholder=' password'

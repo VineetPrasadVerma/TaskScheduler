@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const { userQueries } = require('../controllers/indexController')
+const { userQueries } = require('../controllers/userController')
 
 // handle signup
 router.post('/register', userQueries.createUser)

@@ -28,7 +28,7 @@ form {
   text-align: center;
 }
 
-.button{
+.button {
   width: 100%;
   font-family: inherit;
   font-size: inherit;
@@ -38,11 +38,6 @@ form {
   border: 1px solid #ccc;
   border-radius: 2px;
   background-color: limegreen;
-
-}
-
-.Button{
-  color: green;
 }
 
 input {

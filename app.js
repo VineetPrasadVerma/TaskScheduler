@@ -6,7 +6,7 @@ const express = require('express')
 const cors = require('cors')
 const connectDB = require('./config/connection')
 const taskRoutes = require('./routes/taskRoutes')
-const indexRoutes = require('./routes/indexRoutes')
+const indexRoutes = require('./routes/userRoutes')
 const User = require('./models/userModels')
 
 // Database Connection
