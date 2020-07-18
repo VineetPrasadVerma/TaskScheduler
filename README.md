@@ -122,14 +122,14 @@ I have not written automated tests as I am not aware of them and was running out
 
 #### SCREESHOTS-
 <div align="center">
-    <img src="/screenshots/ss3.png" width="500px"</img> 
-    <img src="/screenshots/ss1.png" width="500px"</img> 
-    <img src="/screenshots/ss4.png" width="500px"</img> 
-    <img src="/screenshots/ss5.png" width="500px"</img> 
-    <img src="/screenshots/ss6.png" width="500px"</img> 
-    <img src="/screenshots/ss2.png" width="500px"</img> 
-    <img src="/screenshots/ss7.png" width="500px"</img> 
-    <img src="/screenshots/ss8.png" width="500px"</img> 
+    <img src="/screenshots/ss3.png"</img> 
+    <img src="/screenshots/ss1.png"</img> 
+    <img src="/screenshots/ss4.png"</img> 
+    <img src="/screenshots/ss5.png"</img> 
+    <img src="/screenshots/ss6.png"</img> 
+    <img src="/screenshots/ss2.png"</img> 
+    <img src="/screenshots/ss7.png"</img> 
+    <img src="/screenshots/ss8.png"</img> 
 </div> 
  
  #### PORTFOLIO LINK-
