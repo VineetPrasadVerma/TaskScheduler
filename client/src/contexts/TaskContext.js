@@ -11,7 +11,6 @@ const TaskContextProvider = (props) => {
     const fetchTasks = async () => {
       try {
         const res = await axios.get('tasks/')
-        console.log('HerevInee')
         if (res.status === 200) {
           dispatch({ type: 'GET_TASK', tasks: res.data.tasks })
         }
@@ -19,7 +18,7 @@ const TaskContextProvider = (props) => {
         if (err.response.status === 401) {
           props.handleError('Please login to visit this page!!')
         } else {
-          props.handleError('Can\'t get tasks')
+          props.handleError("Can't get tasks")
         }
       }
     }

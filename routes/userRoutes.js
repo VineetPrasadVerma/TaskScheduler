@@ -11,7 +11,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
   res.status(200).json()
 })
 
-// LOGOUT ROUTE
+// handle user logout
 router.get('/logout', (req, res) => {
   req.logout()
   res.status(200).json()

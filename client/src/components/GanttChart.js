@@ -5,6 +5,7 @@ import axios from 'axios'
 const GanttChart = (props) => {
   const [tasks, setTasks] = useState([])
 
+  // runs whenever the component will load
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -19,6 +20,7 @@ const GanttChart = (props) => {
   }, [])
 
   const rows = []
+  // populating data to rows to generate gantt chart.
   for (const task of tasks) {
     const row = []
     row.push(
@@ -33,6 +35,7 @@ const GanttChart = (props) => {
     rows.push(row)
   }
 
+  // Populatind data to columns to generate gantt chart
   const columns = [
     { type: 'string', label: 'Task ID' },
     { type: 'string', label: 'Task Name' },

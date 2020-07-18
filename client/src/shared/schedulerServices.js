@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// api to aetch data from server
 const schedulerServices = {}
 
 schedulerServices.createTask = async (added) => {

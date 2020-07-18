@@ -1,5 +1,6 @@
+// Maintain the state of the application
+
 export const taskReducer = (state, action) => {
-  // console.log(action)
   switch (action.type) {
     case 'GET_TASK':
       return [...action.tasks]

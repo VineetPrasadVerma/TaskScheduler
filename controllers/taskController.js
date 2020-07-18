@@ -1,9 +1,11 @@
 const User = require('../models/userModels')
 
+// Data access object
 const taskQueries = {}
 
 taskQueries.getAllTasks = async (req, res) => {
   try {
+    // authenticate user
     if (!req.user) {
       return res
         .status(401)
@@ -11,6 +13,8 @@ taskQueries.getAllTasks = async (req, res) => {
     }
 
     const userId = req.user._id
+
+    // find user
     const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist" })
@@ -27,6 +31,7 @@ taskQueries.createTask = async (req, res) => {
   try {
     const { title, endDate, startDate, allDay, notes = '' } = req.body
 
+    // authenticate user
     if (!req.user) {
       return res
         .status(401)
@@ -35,6 +40,7 @@ taskQueries.createTask = async (req, res) => {
 
     const userId = req.user._id
 
+    // find user
     const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist" })
@@ -52,6 +58,7 @@ taskQueries.createTask = async (req, res) => {
 
 taskQueries.updateTask = async (req, res) => {
   try {
+    // authenticate user
     if (!req.user) {
       return res
         .status(401)
@@ -63,6 +70,7 @@ taskQueries.updateTask = async (req, res) => {
 
     const updatedTask = req.body
 
+    // find user
     const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist" })
@@ -91,6 +99,7 @@ taskQueries.updateTask = async (req, res) => {
 
 taskQueries.deleteTask = async (req, res) => {
   try {
+    // authenticate user
     if (!req.user) {
       return res
         .status(401)
@@ -100,6 +109,7 @@ taskQueries.deleteTask = async (req, res) => {
     const userId = req.user._id
     const taskId = req.params.id
 
+    // find user
     const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist" })

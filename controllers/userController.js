@@ -3,6 +3,7 @@ const passport = require('passport')
 
 const userQueries = {}
 
+// create and authenticate user
 userQueries.createUser = async (req, res) => {
   try {
     const { username, password } = req.body

@@ -7,7 +7,7 @@ const path = require('path')
 const cors = require('cors')
 const connectDB = require('./config/connection')
 const taskRoutes = require('./routes/taskRoutes')
-const indexRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes')
 const User = require('./models/userModels')
 
 // Database Connection
@@ -19,11 +19,13 @@ app.use(cors())
 app.use(express.json())
 
 // PASSPORT CONFIGURATION
-app.use(require('express-session')({
-  secret: 'Feleena is cute cat',
-  resave: false,
-  saveUninitialized: false
-}))
+app.use(
+  require('express-session')({
+    secret: 'Feleena is cute cat',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
@@ -31,9 +33,10 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 // ROUTES HANDLE
-app.use('/', indexRoutes)
+app.use('/', userRoutes)
 app.use('/tasks', taskRoutes)
 
+// FOR PRODUCTION
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './client/build')))
   app.get('*', (req, res) => {

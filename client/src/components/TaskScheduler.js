@@ -27,11 +27,13 @@ import { Redirect } from 'react-router-dom'
 
 const TaskScheduler = ({ handleError }) => {
   const { tasks, dispatch } = useContext(TaskContext)
+
   const [logout, setLogout] = useState(false)
   const [showChart, setShowChart] = useState(false)
   const [currentViewName, setCurrentViewName] = useState('Week')
   const [scheduledTasks, setScheduledTasks] = useState([])
 
+  // called whenever tasks will change
   useEffect(() => {
     for (const task of tasks) {
       task.id = task._id
@@ -41,7 +43,9 @@ const TaskScheduler = ({ handleError }) => {
     setScheduledTasks(tasks)
   }, [tasks])
 
+  // update data in store whenever tasks will change
   const commitChanges = async ({ added, changed, deleted }) => {
+    // for creating new task
     if (added) {
       try {
         const res = await schedulerServices.createTask(added)
@@ -55,6 +59,7 @@ const TaskScheduler = ({ handleError }) => {
       }
     }
 
+    // for updating the task
     if (changed) {
       const updatedData = Object.values(changed)[0]
       const id = Object.keys(changed)[0]
@@ -66,6 +71,7 @@ const TaskScheduler = ({ handleError }) => {
       }
     }
 
+    // for deleting the task
     if (deleted !== undefined) {
       try {
         await schedulerServices.deleteTask(deleted)
@@ -76,6 +82,7 @@ const TaskScheduler = ({ handleError }) => {
     }
   }
 
+  // Handle logout
   const handleLogout = async () => {
     try {
       const res = await axios({
@@ -93,6 +100,7 @@ const TaskScheduler = ({ handleError }) => {
     }
   }
 
+  // To show Gantt Chart
   const handleChart = () => {
     if (tasks.length) {
       setShowChart(true)

@@ -11,6 +11,7 @@ const Login = ({ handleError }) => {
     event.preventDefault()
 
     try {
+      // Api to authenticate user
       const res = await axios({
         method: 'POST',
         url: 'login/',

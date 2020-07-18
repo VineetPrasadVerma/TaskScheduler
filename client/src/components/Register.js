@@ -10,6 +10,7 @@ const Register = ({ handleError }) => {
   const handleRegistration = async (event) => {
     event.preventDefault()
     try {
+      // Api to register and authenticate user
       const res = await axios({
         method: 'POST',
         url: 'register/',
