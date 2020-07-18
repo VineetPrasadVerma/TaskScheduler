@@ -99,6 +99,8 @@ Prerequisite: Node.js, MongoDB
   * Set environment variables in `.env` file:
     PORT=<PORT_NUMBER>
     DATABASE_URL='mongodb://localhost:27017/<db_name>'
+  * Run `sudo mongod` to start the mongo demon.
+  * Open a new terminal at root of repo
   * Run `npm start` to start the server
   * Open a new terminal at root of repo
   * `cd` to `client/`
