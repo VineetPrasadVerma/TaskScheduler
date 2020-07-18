@@ -28,6 +28,7 @@ import { Redirect } from 'react-router-dom'
 const TaskScheduler = ({ handleError }) => {
   const { tasks, dispatch } = useContext(TaskContext)
   const [logout, setLogout] = useState(false)
+  const [showChart, setShowChart] = useState(false)
   const [currentViewName, setCurrentViewName] = useState('Week')
   const [scheduledTasks, setScheduledTasks] = useState([])
 
@@ -92,9 +93,22 @@ const TaskScheduler = ({ handleError }) => {
     }
   }
 
+  const handleChart = () => {
+    if (tasks.length) {
+      setShowChart(true)
+    } else {
+      window.alert('You do not have any data to load the chart!')
+    }
+  }
+
+  if (showChart) {
+    return <Redirect to='/chart' />
+  }
+
   return !logout ? (
     <Paper>
       <Button onClick={handleLogout}>Logout</Button>
+      <Button onClick={handleChart}>Gantt Chart</Button>
       <Scheduler data={scheduledTasks} height={660}>
         <ViewState
           currentViewName={currentViewName}
@@ -102,9 +116,9 @@ const TaskScheduler = ({ handleError }) => {
         />
         <EditingState onCommitChanges={commitChanges} />
         <IntegratedEditing />
-        <DayView startDayHour={8} endDayHour={17} />
-        <WeekView startDayHour={8} endDayHour={17} />
-        <MonthView startDayHour={8} endDayHour={17} />
+        <DayView startDayHour={8} endDayHour={20} />
+        <WeekView startDayHour={8} endDayHour={20} />
+        <MonthView startDayHour={8} endDayHour={20} />
         <Toolbar />
         <DateNavigator />
         <TodayButton />

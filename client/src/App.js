@@ -5,6 +5,7 @@ import Error from './shared/Error'
 import PageNotFound from './shared/PageNotFound'
 import Register from './components/Register'
 import Login from './components/Login'
+import GanttChart from './components/GanttChart'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App () {
@@ -26,11 +27,12 @@ function App () {
           <Route path='/login'>
             <Login handleError={showError} />
           </Route>
-          <Route path='/tasks'>
+          <Route path='/tasks' exact>
             <TaskContextProvider handleError={showError}>
               <TaskScheduler handleError={showError} />
             </TaskContextProvider>
           </Route>
+          <Route path='/chart' component={GanttChart} />
           <Route path='*' component={PageNotFound} />
         </Switch>
       </div>

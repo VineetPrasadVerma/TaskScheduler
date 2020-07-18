@@ -41,6 +41,10 @@ form {
 
 }
 
+.Button{
+  color: green;
+}
+
 input {
   box-sizing: border-box;
   width: 100%;
