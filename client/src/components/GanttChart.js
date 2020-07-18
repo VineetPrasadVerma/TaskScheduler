@@ -44,7 +44,7 @@ const GanttChart = (props) => {
   ]
 
   const handleClick = () => {
-    props.history.push('/tasks')
+    props.history.push('/task')
   }
 
   return (

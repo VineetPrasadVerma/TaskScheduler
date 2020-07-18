@@ -27,7 +27,7 @@ function App () {
           <Route path='/login'>
             <Login handleError={showError} />
           </Route>
-          <Route path='/tasks' exact>
+          <Route path='/task' exact>
             <TaskContextProvider handleError={showError}>
               <TaskScheduler handleError={showError} />
             </TaskContextProvider>

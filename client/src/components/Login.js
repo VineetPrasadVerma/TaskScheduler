@@ -59,7 +59,7 @@ const Login = ({ handleError }) => {
       </p>
     </div>
   ) : (
-    <Redirect to='/tasks' />
+    <Redirect to='/task' />
   )
 }
 

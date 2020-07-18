@@ -57,7 +57,7 @@ const Register = ({ handleError }) => {
       </p>
     </div>
   ) : (
-    <Redirect to='/tasks' />
+    <Redirect to='/task' />
   )
 }
 
